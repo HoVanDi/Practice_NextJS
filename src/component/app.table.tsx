@@ -1,39 +1,85 @@
-"use client"
+"use client";
 
 import Table from "react-bootstrap/Table";
+import { Button } from "react-bootstrap";
+import CreateModal from "./create.modal";
+import UpdateModal from "./update.modal";
+import { useState } from "react";
+import Link from "next/link";
 
-function BasicExample() {
-  return (
-    <Table striped bordered hover>
-      <thead>
-        <tr>
-          <th>#</th>
-          <th>First Name</th>
-          <th>Last Name</th>
-          <th>Username</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>1</td>
-          <td>Mark</td>
-          <td>Otto</td>
-          <td>@mdo</td>
-        </tr>
-        <tr>
-          <td>2</td>
-          <td>Jacob</td>
-          <td>Thornton</td>
-          <td>@fat</td>
-        </tr>
-        <tr>
-          <td>3</td>
-          <td colSpan={2}>Larry the Bird</td>
-          <td>@twitter</td>
-        </tr>
-      </tbody>
-    </Table>
-  );
+interface IProps {
+  // định nghĩa kểu dữ liệu
+  blogs: IBlog[];
 }
+
+const BasicExample = (props: IProps) => {
+  const { blogs } = props; // lấy data
+  console.log(">>check props", blogs);
+
+  const [blog, setBlog] = useState<IBlog | null>(null); // biết được edit tới blog nào
+  const [showModalCreate, setShowModalCreate] = useState<boolean>(false);
+  const [showModalUpdate, setShowModalUpdate] = useState<boolean>(false);
+  return (
+    <>
+      <div
+        className="mb-3"
+        style={{ display: "flex", justifyContent: "space-between" }}
+      >
+        <h3>Table Blogs</h3>
+        <Button variant="secondary" onClick={() => setShowModalCreate(true)}>
+          Add new
+        </Button>
+      </div>
+      <Table striped bordered hover>
+        <thead>
+          <tr>
+            <th>No</th>
+            <th>Title</th>
+            <th>Author</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          {blogs.map((item) => {
+            return (
+              <tr key={item.id}>
+                <td>{item.id}</td>
+                <td>{item.title}</td>
+                <td>{item.author}</td>
+                <td>
+                  <Link className="btn btn-primary" href={`/blogs/${item.id}`}>
+                    View
+                  </Link>
+
+                  <Button
+                    variant="warning"
+                    className="mx-3"
+                    onClick={() => {
+                      setBlog(item);
+                      setShowModalUpdate(true);
+                    }}
+                  >
+                    Edit
+                  </Button>
+                  <Button variant="danger">Delete</Button>
+                </td>
+              </tr>
+            );
+          })}
+        </tbody>
+      </Table>
+      <CreateModal
+        showModalCreate={showModalCreate}
+        setShowModalCreate={setShowModalCreate}
+      />
+      <UpdateModal
+        showModalUpdate={showModalUpdate}
+        setShowModalUpdate={setShowModalUpdate}
+        blog={blog} // userEffect bên kia
+        setBlog={setBlog}
+      />
+    </>
+  );
+};
 
 export default BasicExample;

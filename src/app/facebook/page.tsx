@@ -3,14 +3,14 @@
 import { useRouter } from "next/navigation";
 import { Button } from "react-bootstrap";
 
-const faceboock = () => {
+const facebook = () => {
   const router = useRouter();
   const handleBtn = () => {
     router.push("/");
   };
   return (
     <div>
-      <p>Facebock</p>
+      <p>Facebook</p>
       <div>
         <Button variant="primary">Hỏi Hồ Văn Đi</Button>
         <button onClick={() => handleBtn()}> back home</button>
@@ -19,4 +19,4 @@ const faceboock = () => {
   );
 };
 
-export default faceboock;
+export default facebook;
