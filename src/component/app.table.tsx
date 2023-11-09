@@ -6,6 +6,8 @@ import CreateModal from "./create.modal";
 import UpdateModal from "./update.modal";
 import { useState } from "react";
 import Link from "next/link";
+import { toast } from "react-toastify";
+import { mutate } from "swr";
 
 interface IProps {
   // định nghĩa kểu dữ liệu
@@ -19,6 +21,27 @@ const BasicExample = (props: IProps) => {
   const [blog, setBlog] = useState<IBlog | null>(null); // biết được edit tới blog nào
   const [showModalCreate, setShowModalCreate] = useState<boolean>(false);
   const [showModalUpdate, setShowModalUpdate] = useState<boolean>(false);
+
+  const handlDeleteBlog =(id:number) =>{
+    if(confirm(`Do you want to delete this blog (id =${id})`)){
+          fetch(`http://localhost:8000/blogs/${id}`, {
+            method: "DELETE",
+            headers: {
+              Accept: "application/json, text/plain, */*",
+              "Content-Type": "application/json",
+            },
+
+          }).then(res => res.json())
+          .then(res =>{
+            if (res){
+
+              toast.success("Delete blog succeed!");
+              mutate("http://localhost:8000/blogs");
+            }
+          })
+    }
+  }
+
   return (
     <>
       <div
@@ -61,7 +84,9 @@ const BasicExample = (props: IProps) => {
                   >
                     Edit
                   </Button>
-                  <Button variant="danger">Delete</Button>
+                  <Button variant="danger"
+                  onClick={()=> handlDeleteBlog(item.id)}
+                  >Delete</Button>
                 </td>
               </tr>
             );

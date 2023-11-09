@@ -10,8 +10,8 @@ function BasicExample() {
     <Navbar expand="lg" className="bg-body-tertiary">
       <Container>
         <Navbar.Brand>
-          <Link href={"/"} className="navbar-brand"> 
-          Hồ Văn Đi
+          <Link href={"/"} className="navbar-brand">
+            Home page
           </Link>
         </Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
@@ -20,21 +20,9 @@ function BasicExample() {
             <Link href={"./blogs"} className="nav-link">
               Blogs
             </Link>
-
-{/* 
-            <NavDropdown title="Dropdown" id="basic-nav-dropdown">
-              <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
-              <NavDropdown.Item href="#action/3.2">
-                Another action
-              </NavDropdown.Item>
-              <NavDropdown.Item href="#action/3.3">Something</NavDropdown.Item>
-              <NavDropdown.Divider />
-              <NavDropdown.Item href="#action/3.4">
-                Separated link
-              </NavDropdown.Item>
-            </NavDropdown> */}
-
-            
+            <Link href={"/facebook"} className="nav-link">
+              <span>facebook</span>
+            </Link>{" "}
           </Nav>
         </Navbar.Collapse>
       </Container>
